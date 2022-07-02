@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+
 /**
- * main -> assign a random number is the variable n each time it is executed and prints out
- * based on a condition
+ * main -> assign a random number to the variable n each time it is executed and prints out
+ * based a conditon
  * Return: always 0
  */
 int main(void)
@@ -14,7 +15,7 @@ int main(void)
 	n = rand() - RAND_MAX / 2;
 	if (n > 0)
 		printf("%d is positive\n", n);
-	if (n === 0)
+	if (n == 0)
 		printf("%d is zero\n", n);
 	if (n < 0)
 		printf("%d is negative\n", n);
