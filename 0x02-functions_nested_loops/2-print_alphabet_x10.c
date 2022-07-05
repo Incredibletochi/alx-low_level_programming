@@ -1,8 +1,7 @@
 #include "main.h"
 
 /**
- * main - Entry point
- * Description: Prints_alphabet_x10 -> prints the lowercase alphabets
+ * Prints_alphabet_x10 -> prints the lowercase alphabets
  */
 
 void print_alphabet_x10(void);
