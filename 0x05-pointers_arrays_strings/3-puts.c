@@ -3,12 +3,14 @@
 /**
  * _puts -> this is a function that puts
  * @str: a param to _puts function
+ *
+ * Return: void
  */
 void _puts(char *str)
 {
-	for (; *str != '\n'; str++)
+	for (; *str != '\0'; str++)
 	{
-		putchar(*str);
+		_putchar(*str);
 	}
 	_putchar('\n');
 }
