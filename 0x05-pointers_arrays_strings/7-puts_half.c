@@ -1,7 +1,8 @@
 #include "main.h"
+#include <string.h>
 
 /**
- * puts_half - print the econd half of a string
+ * puts_half - print the second half of a string
  * @str: the string to print
  *
  * Return: void
