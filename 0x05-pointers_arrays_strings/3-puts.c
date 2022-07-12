@@ -2,17 +2,19 @@
 
 /**
  * _puts - print a string, followed by a new line
- * @str: the string to print
+ * @str: pointer to a string to print
  *
- * Return: void
+ * Return: 0
  */
 
 void _puts(char *str)
 {
-	if (str)
+	int i = 0;
+
+	while (str[i])
 	{
-		while (*str)
-		_putchar(*str++);
-		_putchar('\n');
+		_putchar(str[i]);
+		i++;
 	}
+	_putchar('\n');
 }
