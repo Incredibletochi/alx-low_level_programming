@@ -1,38 +1,35 @@
 #include "main.h"
 
 /**
- * cap_string - Capitalizes all words of a string.
- * @str: The string to be capitalized.
+ * cap_string - capitalize the words in a strings
+ * @s: the string to capitalize
  *
- * Return: A pointer to the changed string.
+ * Description: The following characters are considered word separators:
+ * "<space> <tab> <newline> , ; . ! ? \" ( ) { }"
+ *
+ * Return: pointer to the capitalized string
  */
-har *cap_string(char *str)
+char *cap_string(char *s)
 {
-	int index = 0;
+	char *ws = " \t\n,;.!?\"(){}";
+	int i;
+	int j;
 
-	while (str[index])
+	for (i = 0, j = 0; s[i]; ++i)
 	{
-		while (!(str[index] >= 'a' && str[index] <= 'z'))
-			index++;
+		if ('a' <= s[i] && s[i] <= 'z')
+		{
 
-		if (str[index - 1] == ' ' ||
-			 str[index - 1] == '\t' ||
-			 str[index - 1] == '\n' ||
-			 str[index - 1] == ',' ||
-			 str[index - 1] == ';' ||
-			 str[index - 1] == '.' ||
-			 str[index - 1] == '!' ||
-			 str[index - 1] == '?' ||
-			 str[index - 1] == '"' ||
-			 str[index - 1] == '(' ||
-			 str[index - 1] == ')' ||
-			 str[index - 1] == '{' ||
-			 str[index - 1] == '}' ||
-			 index == 0)
-			str[index] -= 32;
+			if (i)
+			{
+				for (j = 0; ws[j] && ws[j] != s[i - 1]; ++j)
+					;
+			}
 
-		index++;
+			if (ws[j])
+				s[i] -= ('a' - 'A');
+		}
 	}
 
-	return (str);
+	return (s);
 }
