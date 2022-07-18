@@ -25,6 +25,5 @@ char *_strstr(char *haystack, char *needle)
 				return (NULL);
 		} while (*hpos++ == *npos++);
 	} while (*hpos++ == *npos++);
-
 	return (NULL);
 }
