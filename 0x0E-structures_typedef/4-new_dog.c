@@ -1,79 +1,78 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "dog.h"
+#include <stdlib.h>
+
+/**
+ * _strcpy - function that copies the string pointed to
+ * @dest: pointer to string entry data
+ * @src: destiny data
+ * Return: return value of dest
+ */
+void *_strcpy(char *dest, char *src)
+{
+	int i = 0;
+
+	if (src != '\0')
+	{
+		for (i = 0;  *(src + i) != '\0'; i++)
+		{
+			*(dest + i) = *(src + i);
+		}
+	}
+
+	*(dest + i) = '\0';
+	return (dest);
+}
+
+/**
+ * _strlen - returns the length of a string.
+ * @s: pointer to String
+ * Return: Nothing
+ */
+unsigned int _strlen(char *s)
+{
+	unsigned int i = 0;
+
+	while (*(s + i) != '\0')
+	{
+		i++;
+	}
+
+	return (i);
+}
 
 /**
  * new_dog - function that creates a new dog
- * @name: passed from main
- * @age: passed from main
- * @owner: passed from main
+ * @name: name to create a new struct
+ * @age: age to create a new struct
+ * @owner: owner to create a new struct
  *
- * Return: pointer to the struct
+ * Return: dog struct
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *ptr;
+	dog_t *n_dog;
 
-	if (name == NULL || owner == NULL)
-		return (NULL);
-	ptr = malloc(sizeof(dog_t));
-	if (ptr != NULL)
+	n_dog =  malloc(sizeof(dog_t));
+	if (n_dog)
 	{
-		ptr->name = _strdup(name);
-		if (ptr->name == NULL)
+		n_dog->name = malloc((_strlen(name) + 1) * sizeof(char));
+		if (n_dog->name)
 		{
-			free(ptr->name);
-			free(ptr);
-			return (NULL);
+			n_dog->owner = malloc((_strlen(owner) + 1) * sizeof(char));
+			if (n_dog->owner)
+			{
+				_strcpy(n_dog->name, name);
+				_strcpy(n_dog->owner, owner);
+				n_dog->age = age;
+				return (n_dog);
+			}
+			else
+				free(n_dog->name);
+			free(n_dog);
 		}
-		ptr->age = age;
-		ptr->owner = _strdup(owner);
-		if (ptr->owner == NULL)
-		{
-			free(ptr->name);
-			free(ptr->owner);
-			free(ptr);
-			return (NULL);
-		}
-		return (ptr);
+		else
+			free(n_dog);
 	}
 	return (NULL);
 }
 
-/**
- * _strdup - function that returns a pointer to a newly allocated space
- * in memory, which contains a copy of the string given as a parameter
- *
- * @str: string of chars
- *
- * Return: address of the newly allocated memory
- */
-char *_strdup(char *str)
-{
-	unsigned int len;
-	unsigned int i, j;
-	char *str_copy;
-	char *tmp = str;
-
-	if (str == NULL)
-		return (NULL);
-
-	i = 0;
-	while (*str++)
-		i++;
-	len = i;
-	str = tmp;
-
-	str_copy = malloc(len * sizeof(char) + 1);
-	if (str_copy == NULL)
-		return (NULL);
-
-	j = 0;
-	while (j < len)
-	{
-		str_copy[j] = str[j];
-		j++;
-	}
-	str_copy[j] = '\0';
-	return (str_copy);
-}
