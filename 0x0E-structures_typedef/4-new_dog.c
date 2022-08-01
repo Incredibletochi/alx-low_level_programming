@@ -1,47 +1,77 @@
 #include "dog.h"
-#include <stdlib.h>
 
 /**
- * new_dog - creates a new dog structure
- * @name: Dog's name
- * @age: Dog's age
- * @owner: Dog's owner
- * Return: returns a pointer to newly created dog structure
+ * _strdup - create a new array containing a copy of the given string
+ * @str: a pointer to the string to copy
+ *
+ * Return: NULL if str is NULL or if memory allocation fails,
+ * otherwise a return a pointer to the new copy
+ */
+char *_strdup(char *str)
+{
+	char *dup;
+	unsigned int size = 0;
+
+	if (str)
+	{
+		while (str[size++])
+			;
+
+		dup = malloc(sizeof(char) * size);
+		if (dup)
+		{
+			while (size--)
+				dup[size] = str[size];
+
+			return (dup);
+		}
+	}
+	return (NULL);
+}
+
+
+/**
+ * new_dog - create a new dog
+ * @name: the new dog's name
+ * @age: the new dog's age
+ * @owner: the new dog's owner
+ *
+ * Return: a pointer to the new dog, or NULL if memory allocation fails
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *new_dog;
-	char *cpyname, *cpyowner;
-	int len_name = 0, len_owner = 0, i;
+	dog_t *d;
 
-	if (name == NULL || owner == NULL)
+	d = malloc(sizeof(dog_t));
+	if (!d)
 		return (NULL);
 
-	while (name[len_name])
-		len_name++;
-	while (owner[len_owner])
-		len_owner++;
+	if (name)
+	{
+		d->name = _strdup(name);
+		if (!(d->name))
+		{
+			free(d);
+			return (NULL);
+		}
+	}
+	else
+		d->name = NULL;
 
-	new_dog = malloc(sizeof(dog_t));
-	if (new_dog == NULL)
-		return (NULL);
+	d->age = age;
 
-	cpyname = malloc(len_name + 1);
-	if (cpyname == NULL)
-		return (NULL);
-	for (i = 0; name[i]; i++)
-		cpyname[i] = name[i];
-	cpyname[i] = '\0';
+	if (owner)
+	{
+		d->owner = _strdup(owner);
+		if (!(d->owner))
+		{
+			free(d->name);
+			free(d);
+			return (NULL);
+		}
+	}
+	else
+		d->owner = NULL;
 
-	cpyowner = malloc(len_owner + 1);
-	if (cpyowner == NULL)
-		return (NULL);
-	for (i = 0; owner[i]; i++)
-		cpyowner[i] = owner[i];
-	cpyowner[i] = '\0';
-
-	new_dog->name = cpyname;
-	new_dog->age = age;
-	new_dog->owner = cpyowner;
-	return (new_dog);
+	return (d);
 }
