@@ -1,77 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "dog.h"
 
 /**
- * _strdup - create a new array containing a copy of the given string
- * @str: a pointer to the string to copy
+ * new_dog - function that creates a new dog
+ * @name: passed from main
+ * @age: passed from main
+ * @owner: passed from main
  *
- * Return: NULL if str is NULL or if memory allocation fails,
- * otherwise a return a pointer to the new copy
+ * Return: pointer to the struct
  */
-char *_strdup(char *str)
+dog_t *new_dog(char *name, float age, char *owner)
 {
-	char *dup;
-	unsigned int size = 0;
+	dog_t *ptr;
 
-	if (str)
+	if (name == NULL || owner == NULL)
+		return (NULL);
+	ptr = malloc(sizeof(dog_t));
+	if (ptr != NULL)
 	{
-		while (str[size++])
-			;
-
-		dup = malloc(sizeof(char) * size);
-		if (dup)
+		ptr->name = _strdup(name);
+		if (ptr->name == NULL)
 		{
-			while (size--)
-				dup[size] = str[size];
-
-			return (dup);
+			free(ptr->name);
+			free(ptr);
+			return (NULL);
 		}
+		ptr->age = age;
+		ptr->owner = _strdup(owner);
+		if (ptr->owner == NULL)
+		{
+			free(ptr->name);
+			free(ptr->owner);
+			free(ptr);
+			return (NULL);
+		}
+		return (ptr);
 	}
 	return (NULL);
 }
 
-
 /**
- * new_dog - create a new dog
- * @name: the new dog's name
- * @age: the new dog's age
- * @owner: the new dog's owner
+ * _strdup - function that returns a pointer to a newly allocated space
+ * in memory, which contains a copy of the string given as a parameter
  *
- * Return: a pointer to the new dog, or NULL if memory allocation fails
+ * @str: string of chars
+ *
+ * Return: address of the newly allocated memory
  */
-dog_t *new_dog(char *name, float age, char *owner)
+char *_strdup(char *str)
 {
-	dog_t *d;
+	unsigned int len;
+	unsigned int i, j;
+	char *str_copy;
+	char *tmp = str;
 
-	d = malloc(sizeof(dog_t));
-	if (!d)
+	if (str == NULL)
 		return (NULL);
 
-	if (name)
+	i = 0;
+	while (*str++)
+		i++;
+	len = i;
+	str = tmp;
+
+	str_copy = malloc(len * sizeof(char) + 1);
+	if (str_copy == NULL)
+		return (NULL);
+
+	j = 0;
+	while (j < len)
 	{
-		d->name = _strdup(name);
-		if (!(d->name))
-		{
-			free(d);
-			return (NULL);
-		}
+		str_copy[j] = str[j];
+		j++;
 	}
-	else
-		d->name = NULL;
-
-	d->age = age;
-
-	if (owner)
-	{
-		d->owner = _strdup(owner);
-		if (!(d->owner))
-		{
-			free(d->name);
-			free(d);
-			return (NULL);
-		}
-	}
-	else
-		d->owner = NULL;
-
-	return (d);
+	str_copy[j] = '\0';
+	return (str_copy);
 }
