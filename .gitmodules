@@ -1,0 +1,3 @@
+[submodule "0x19-C_Stacks/monty"]
+	path = 0x19-C_Stacks/monty
+	url = https://github.com/Incredibletochi/monty.git
